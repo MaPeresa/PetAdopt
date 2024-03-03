@@ -2,8 +2,6 @@
  <div class="row">
  <div class="col-1"></div>
  <div class="col-2">
- <hello-world />
- <hello-world />
  </div>
  <div class="col-8">
   <hello-world />
