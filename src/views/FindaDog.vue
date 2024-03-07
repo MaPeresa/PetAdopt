@@ -15,11 +15,18 @@
           <option value="3">Istra</option>
           <option value="4">Slavonija</option>
         </select>
-        <a class="btn" href="#" role="button">Apply filter</a>
+        <button
+          class="btn btn-secondary"
+          href="#"
+          role="button"
+          style="width: 200px"
+        >
+          Apply filter
+        </button>
       </div>
     </div>
     <div class="col-8">
-      <div id="listings-screen" class="card text-center">
+      <div class="listings-screen card text-center">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -85,7 +92,7 @@ export default {
   margin-top: 0.5em;
 }
 
-#listings-screen {
+.listings-screen {
   background-color: #473a0b14;
   border: 1px solid;
   border-color: #473a0b;

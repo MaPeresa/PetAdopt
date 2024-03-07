@@ -34,5 +34,17 @@ export default {
   },
 };
 </script>
+<style>
+.listings-screen {
+  background-color: #473a0b14;
+  border: 1px solid;
+  border-color: #473a0b;
+  border-radius: 8px;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  width: 914px;
+}
+</style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
