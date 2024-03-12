@@ -24,11 +24,170 @@
       </div>
 
       <div class="col">
-        <button type="button" class="btn btn-secondary">
-          <b>Sign up</b>
-        </button>
-        <button type="button" class="btn btn-secondary">
-          Already have an account? <b>Login</b>
+        <div
+          class="modal fade"
+          id="exampleModalToggle"
+          aria-hidden="true"
+          aria-labelledby="exampleModalToggleLabel"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
+                  Log In
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="container">
+                  <div class="col">
+                    <form>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="exampleInputEmail1"
+                          aria-describedby="emailHelp"
+                          placeholder="e.g. username@gmail.com"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="type your password"
+                        />
+                      </div>
+                      <button type="submit" class="btn btn-primary">
+                        Log in
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  class="btn btn-secondary"
+                  data-bs-target="#exampleModalToggle2"
+                  data-bs-toggle="modal"
+                  style="margin: auto"
+                >
+                  Don't have an account yet? Register
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="modal fade"
+          id="exampleModalToggle2"
+          aria-hidden="true"
+          aria-labelledby="exampleModalToggleLabel2"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">
+                  Register
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="container">
+                  <div class="col">
+                    <form>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Username</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="exampleInputEmail1"
+                          aria-describedby="emailHelp"
+                          placeholder="e.g. Username123"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="exampleInputEmail1"
+                          aria-describedby="emailHelp"
+                          placeholder="e.g. username@gmail.com"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Phone number</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="exampleInputEmail1"
+                          aria-describedby="emailHelp"
+                          placeholder="+385 91 365 1230"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="type your password"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1"
+                          >Repeat Password</label
+                        >
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="retype your password"
+                        />
+                      </div>
+                      <button type="submit" class="btn btn-primary">
+                        Register
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  class="btn btn-secondary"
+                  data-bs-target="#exampleModalToggle"
+                  data-bs-toggle="modal"
+                  style="margin: auto"
+                >
+                  Already have and account? Login
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          class="btn btn-secondary"
+          data-bs-target="#exampleModalToggle"
+          data-bs-toggle="modal"
+          style="margin-top: 6rem"
+        >
+          <b>Login</b>
         </button>
       </div>
     </div>
@@ -37,12 +196,12 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/listing.vue";
+import listing from "@/components/listing.vue";
 
 export default {
   name: "HomeView",
   components: {
-    HelloWorld,
+    listing,
   },
 };
 </script>
@@ -50,10 +209,7 @@ export default {
 .doggo {
   max-width: 70%;
   max-height: 70%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 5rem;
-  margin-bottom: 10rem;
+  margin: 100px auto 200px auto;
 }
 
 .cta {
@@ -62,5 +218,10 @@ export default {
   margin-right: auto;
   text-align: center;
   margin-top: 8rem;
+}
+
+.form-group {
+  margin: 20px;
+  align-content: center;
 }
 </style>

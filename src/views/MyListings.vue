@@ -1,16 +1,58 @@
 <template>
-  <div class="row">
+  <div class="container-lg">
     <div class="col-1"></div>
 
     <div id="listings-screen" class="card text-center">
-      <ul class="list-group list-group-horizontal-sm">
-        <li class="list-group-item">komponenta 1-pas</li>
-        <li class="list-group-item">komponenta 2-pas</li>
-        <li class="list-group-item">komponenta 3-pas</li>
-      </ul>
+      <div class="card">
+        <listing />
+        <div class="card-buttons">
+          <div
+            class="btn-group"
+            role="group"
+            aria-label="Basic radio toggle button group"
+          >
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="btnradio1"
+              autocomplete="off"
+              checked
+            />
+            <label class="btn btn-outline-primary" for="btnradio1"
+              >Adopted</label
+            >
 
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="btnradio2"
+              autocomplete="off"
+            />
+            <label class="btn btn-outline-primary" for="btnradio2"
+              >Not Adopted</label
+            >
+          </div>
+          <button
+            type="button"
+            class="btn btn-danger"
+            style="margin-left: 1rem"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
       <listing />
       <listing />
+      <p class="d-inline-flex gap-1">
+        <button class="btn btn-secondary" style="margin: auto">
+          <b>Add dog</b>
+        </button>
+        <button class="btn btn-primary" style="margin: auto">
+          Create a new listing
+        </button>
+      </p>
     </div>
   </div>
 </template>
@@ -74,8 +116,31 @@ export default {
   margin-top: 2rem;
 }
 
-.btn {
-  margin-top: 1rem;
+.btn-check:checked + .btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check) + .btn:active {
+  color: #fed850;
+  background-color: #473a0b;
+  border-color: #473a0b;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: #473a0b;
+  --bs-btn-border-color: #473a0b;
+  --bs-btn-hover-color: #fed850;
+  --bs-btn-hover-bg: #473a0b;
+  --bs-btn-hover-border-color: #473a0b;
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
+  --bs-btn-active-color: #fed850;
+  --bs-btn-active-bg: #473a0b;
+  --bs-btn-active-border-color: #473a0b;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #473a0b;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #473a0bd;
+  --bs-gradient: none;
 }
 
 a {

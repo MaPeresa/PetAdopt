@@ -109,11 +109,11 @@
   --bs-btn-hover-bg: transparent;
   --bs-btn-hover-border-color: transparent;
   --bs-btn-focus-shadow-rgb: 49, 132, 253;
-  --bs-btn-active-color: rgba(254, 216, 80, 0.18);
+  --bs-btn-active-color: #473a0b;
   --bs-btn-active-bg: rgba(254, 216, 80, 0.18);
   --bs-btn-active-border-color: #473a0b;
   --bs-btn-active-shadow: inset 8 8px 10px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: rgba(254, 216, 80, 0.01);
+  --bs-btn-disabled-color: #473a0b;
   --bs-btn-disabled-bg: rgba(254, 216, 80, 0.18);
   --bs-btn-disabled-border-color: #473a0b;
   position: static;
@@ -122,7 +122,6 @@
   box-shadow: 8px 8px 10 px #00000040;
   height: 64px;
   width: 400px;
-  margin-top: 2rem;
 }
 
 nav {

@@ -15,12 +15,7 @@
           <option value="3">Istra</option>
           <option value="4">Slavonija</option>
         </select>
-        <button
-          class="btn btn-secondary"
-          href="#"
-          role="button"
-          style="width: 200px"
-        >
+        <button class="btn" href="#" role="button" style="width: auto">
           Apply filter
         </button>
       </div>
@@ -90,17 +85,6 @@ export default {
 
 .form-select {
   margin-top: 0.5em;
-}
-
-.listings-screen {
-  background-color: #473a0b14;
-  border: 1px solid;
-  border-color: #473a0b;
-  border-radius: 8px;
-  height: auto;
-  overflow: hidden;
-  position: relative;
-  width: 914px;
 }
 
 .btn {
