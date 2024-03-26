@@ -31,31 +31,26 @@ import { ref } from 'vue';
 import { firebase } from '@/firebase';
 
 export default {
-  name: "Login",
-  setup() {
-    const email = ref('');
-    const password = ref('');
-    const errorMessage = ref('');
-
-    const login = async () => {
+  name: "login",
+  data() {
+    return {
+      email: "",
+      password: "",
+      errorMessage: "",
+    };
+  },
+  methods: {
+    async login() {
       try {
-        await firebase.auth().signInWithEmailAndPassword(email.value, password.value);
-        errorMessage.value = ''; 
+        await firebase.auth().signInWithEmailAndPassword(this.email, this.password);
+        this.errorMessage = ""; // Clear any previous error messages
         console.log("Login successful");
-        this.$router.push('/home'); //13:30 vue4 login video, router ne radi, probaj sa using promises?
-        
+        // Redirect or perform any other action after successful login
       } catch (error) {
         console.error("An error occurred", error);
-        errorMessage.value = error.message;
+        this.errorMessage = error.message;
       }
-    };
-
-    return {
-      email,
-      password,
-      errorMessage,
-      login
-    };
+    },
   },
 };
 </script>
