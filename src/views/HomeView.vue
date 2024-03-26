@@ -12,7 +12,10 @@
             Many paws out there are looking for a human, if you are looking for
             a paw, find your match now!
           </h2>
-          <button type="button" class="btn btn-primary">Find a dog</button>
+          
+          <button type="button" class="btn btn-primary"><router-link to="/FindaDog" class="nav-link"
+                >Find a dog</router-link
+              ></button>
         </div>
       </div>
     </div>
@@ -26,6 +29,7 @@
       <div class="col">
         <div
           class="modal fade"
+          id="exampleModalToggle"
           aria-hidden="true"
           aria-labelledby="exampleModalToggleLabel"
           tabindex="-1"
@@ -33,7 +37,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5">
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
                   Log In
                 </h1>
                 <button
@@ -52,6 +56,7 @@
                         <input
                           type="email"
                           class="form-control"
+                          id="exampleInputEmail1"
                           aria-describedby="emailHelp"
                           placeholder="e.g. username@gmail.com"
                         />
@@ -61,6 +66,7 @@
                         <input
                           type="password"
                           class="form-control"
+                          id="exampleInputPassword1"
                           placeholder="type your password"
                         />
                       </div>
@@ -86,6 +92,7 @@
         </div>
         <div
           class="modal fade"
+          id="exampleModalToggle2"
           aria-hidden="true"
           aria-labelledby="exampleModalToggleLabel2"
           tabindex="-1"
@@ -112,6 +119,7 @@
                         <input
                           type="email"
                           class="form-control"
+                          id="exampleInputEmail1"
                           aria-describedby="emailHelp"
                           placeholder="e.g. Username123"
                         />
@@ -121,6 +129,7 @@
                         <input
                           type="email"
                           class="form-control"
+                          id="exampleInputEmail1"
                           aria-describedby="emailHelp"
                           placeholder="e.g. username@gmail.com"
                         />
@@ -130,6 +139,7 @@
                         <input
                           type="email"
                           class="form-control"
+                          id="exampleInputEmail1"
                           aria-describedby="emailHelp"
                           placeholder="+385 91 365 1230"
                         />
@@ -139,6 +149,7 @@
                         <input
                           type="password"
                           class="form-control"
+                          id="exampleInputPassword1"
                           placeholder="type your password"
                         />
                       </div>
@@ -149,6 +160,7 @@
                         <input
                           type="password"
                           class="form-control"
+                          id="exampleInputPassword1"
                           placeholder="retype your password"
                         />
                       </div>

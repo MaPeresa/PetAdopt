@@ -3,13 +3,13 @@
     <div class="col-1"></div>
     <div class="col-2">
       <div class="filter-results">
-        Filter results
+       <h3>Filter results</h3> 
         <select class="form-select" aria-label="Country">
-          <option selected>Pick a country</option>
+          <option selected disabled>Pick a country</option>
           <option value="1">Hrvatska</option>
         </select>
         <select class="form-select" aria-label="Region">
-          <option selected>Pick a region</option>
+          <option selected>All regions</option>
           <option value="1">Centralna Hrvatska</option>
           <option value="2">Dalmacija</option>
           <option value="3">Istra</option>

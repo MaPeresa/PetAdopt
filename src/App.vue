@@ -37,6 +37,11 @@
               >
             </li>
             <li class="nav-item">
+              <router-link to="/SignUp" class="nav-link" justify-content-end
+                >Sign up</router-link
+              >
+            </li>
+            <li class="nav-item">
               <router-link to="/MyListings" class="nav-link"
                 >My Listings</router-link
               >
@@ -47,14 +52,7 @@
                 >Find a dog</router-link
               >
 
-              <div
-                class="dropdown-menu"
-                aria-labelledby="navbarDropdownMenuLink"
-              >
-                <router-link to="/">Home</router-link>|
-                <router-link to="/Login">Login</router-link>|
-                <router-link to="/MyListings">My Listings</router-link>|
-              </div>
+              
             </li>
           </ul>
         </div>
