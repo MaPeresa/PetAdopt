@@ -1,24 +1,36 @@
 <template>
-  <div class="card mb-3" style="max-width: 1440px">
+  <div
+    class="card mb-3"
+    style="max-width: 1440px"
+    v-for="dog in lists"
+    :key="list">
     <div class="row g-0">
       <div class="col-md-4">
-        <img src="@/assets/dog2.jpg" class="img-fluid rounded-start" alt="" />
+        <img :src="dog.photo" class="img-fluid rounded-start" alt="" />
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">Family dog Rocky</h5>
+          <h5 class="card-title">{{ dog.title }}</h5>
           <p class="card-text">
-            This is Rocky. He is 5 years old and looking for a new home. He has
-            been chipped, regularly vaccinated and has not been spayed. Rocky is
-            very friendly with kids and loves a lot of outdoor time.
+            This is {{ dog.petName }}. He is 5 years old and looking for a new
+            home. He has been chipped, regularly vaccinated and has not been
+            spayed. {{ dog.petName }} is very friendly with kids and loves a lot
+            of outdoor time.
           </p>
           <p class="card-text">
             <small class="text-body-secondary"
-              >Rocky | 5 years old | male</small
+              >{{ dog.petName }} | 5 years old | male</small
             >
           </p>
           <p class="card-text">
-            <small class="text-body-secondary">Location: Pula, Istra</small>
+            <small class="text-body-secondary"
+              >Location: {{ dog.region }}, {{ dog.country }}</small
+            >
+          </p>
+          <p class="card-text">
+            <small class="text-body-secondary"
+              >Adopted: {{ dog.adopted }}</small
+            >
           </p>
         </div>
       </div>
@@ -30,10 +42,14 @@
 export default {
   name: "listing",
   props: {
-    msg: String,
+    lists: {
+      type: Array,
+      required: true,
+    },
   },
 };
 </script>
+
 <style>
 .listings-screen {
   background-color: #473a0b14;

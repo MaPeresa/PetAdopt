@@ -1,8 +1,7 @@
 <template>
   <link
     href="https://fonts.googleapis.com/css?family=Nunito"
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
   <div id="app">
     <nav id="nav" class="navbar navbar-expand-lg navbar-light">
       <!--Image and text-->
@@ -12,8 +11,7 @@
             src="@/assets/PetAdopt_logo.png"
             width="150"
             height="45"
-            alt=""
-          />
+            alt="" />
         </a>
         <button
           class="navbar-toggler"
@@ -22,8 +20,7 @@
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+          aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -32,27 +29,24 @@
               <router-link to="/" class="nav-link">Home</router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/Login" class="nav-link" justify-content-end
-                >Login</router-link
-              >
+              <router-link to="/Login" class="nav-link">Login</router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/SignUp" class="nav-link" justify-content-end
-                >Sign up</router-link
-              >
+              <router-link to="/SignUp" class="nav-link">Sign up</router-link>
             </li>
             <li class="nav-item">
               <router-link to="/MyListings" class="nav-link"
                 >My Listings</router-link
               >
             </li>
-            
+
             <li class="nav-item">
               <router-link to="/FindaDog" class="nav-link"
                 >Find a dog</router-link
               >
-
-              
+            </li>
+            <li class="nav-item">
+              <a href="#" @click="logout" class="nav-link">Log out</a>
             </li>
           </ul>
         </div>
@@ -62,6 +56,44 @@
     <router-view />
   </div>
 </template>
+
+<script>
+import store from "@/store";
+import { firebase } from "@/firebase";
+import router from "@/router";
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    console.log("User is logged in", user.email);
+    store.currentUser = user.email;
+
+    const currentRoute = router.currentRoute;
+    if (currentRoute.meta.requiresAuth) {
+      router.push("/Login");
+    }
+  }
+});
+
+export default {
+  name: "App",
+  data() {
+    return {
+      store,
+    };
+  },
+  methods: {
+    async logout() {
+      try {
+        await firebase.auth().signOut();
+        console.log("User logged out");
+        this.$router.replace("/Login");
+      } catch (error) {
+        console.error("An error occurred", error);
+      }
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 #app {

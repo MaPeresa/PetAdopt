@@ -1,24 +1,61 @@
 <template>
   <div class="container-lg">
-    <div class="col-1"></div>
+    <div class="col-6">
+      <form @submit.prevent="postNewListing" class="form-inline mb-5">
+        <div class="form-group">
+          <label for="dogName">Dog name</label>
+          <input
+            v-model="dogName"
+            type="text"
+            class="form-control ml-2"
+            placeholder="Enter the name"
+            id="dogName" />
+        </div>
+        <div class="form-group">
+          <label for="gender">gender</label>
+          <input
+            v-model="gender"
+            type="text"
+            class="form-control ml-2"
+            placeholder="Enter the gender"
+            id="gender" />
+        </div>
+        <div class="form-group">
+          <label for="age">age</label>
+          <input
+            v-model="age"
+            type="text"
+            class="form-control ml-2"
+            placeholder="Enter the age"
+            id="age" />
+        </div>
+        <div class="form-group">
+          <label for="listingDescription">Listing description</label>
+          <input
+            v-model="listingDescription"
+            type="text"
+            class="form-control ml-2"
+            placeholder="Enter description"
+            id="listingDescription" />
+        </div>
+        <button type="submit" class="btn btn-primary ml-2">Post listing</button>
+      </form>
+    </div>
 
     <div id="listings-screen" class="card text-center">
       <div class="card">
-        <listing />
         <div class="card-buttons">
           <div
             class="btn-group"
             role="group"
-            aria-label="Basic radio toggle button group"
-          >
+            aria-label="Basic radio toggle button group">
             <input
               type="radio"
               class="btn-check"
               name="btnradio"
               id="btnradio1"
               autocomplete="off"
-              checked
-            />
+              checked />
             <label class="btn btn-outline-primary" for="btnradio1"
               >Adopted</label
             >
@@ -28,8 +65,7 @@
               class="btn-check"
               name="btnradio"
               id="btnradio2"
-              autocomplete="off"
-            />
+              autocomplete="off" />
             <label class="btn btn-outline-primary" for="btnradio2"
               >Not Adopted</label
             >
@@ -37,18 +73,17 @@
           <button
             type="button"
             class="btn btn-danger"
-            style="margin-left: 1rem"
-          >
+            style="margin-left: 1rem">
             Delete
           </button>
         </div>
       </div>
-      <listing />
-      <listing />
+      <listing :listings="listings" />
       <p class="d-inline-flex gap-1">
         <button class="btn btn-secondary" style="margin: auto">
           <b>Add dog</b>
         </button>
+
         <button class="btn btn-primary" style="margin: auto">
           Create a new listing
         </button>
@@ -65,6 +100,34 @@ export default {
   name: "HomeView",
   components: {
     listing,
+  },
+  data() {
+    return {
+      dogName: "",
+      gender: "",
+      age: "",
+      listingDescription: "",
+      listings: [],
+    };
+  },
+  methods: {
+    postNewListing() {
+      const dogName = this.dogName;
+      const gender = this.gender;
+      const age = this.age;
+      const listingDescription = this.listingDescription;
+
+      db.collection("listings").add({
+        Name: dogName,
+        Gend: gender,
+        Age: age,
+        Description: listingDescription,
+        email: store.currentUser.email,
+        postedAt: new Date(),
+      });
+
+      console.log(dogName, gender, age, listingDescription);
+    },
   },
 };
 </script>

@@ -8,11 +8,21 @@
           <form @submit.prevent="login">
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" v-model.trim="email" class="form-control" placeholder="Enter email" required>
+              <input
+                type="email"
+                v-model.trim="email"
+                class="form-control"
+                placeholder="Enter email"
+                required />
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" v-model.trim="password" class="form-control" placeholder="Password" required>
+              <input
+                type="password"
+                v-model.trim="password"
+                class="form-control"
+                placeholder="Password"
+                required />
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
           </form>
@@ -27,8 +37,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { firebase } from '@/firebase';
+import { firebase } from "@/firebase";
 
 export default {
   name: "login",
@@ -42,10 +51,12 @@ export default {
   methods: {
     async login() {
       try {
-        await firebase.auth().signInWithEmailAndPassword(this.email, this.password);
-        this.errorMessage = ""; // Clear any previous error messages
+        await firebase
+          .auth()
+          .signInWithEmailAndPassword(this.email, this.password);
+        this.errorMessage = "";
         console.log("Login successful");
-        // Redirect or perform any other action after successful login
+        this.$router.replace("/FindADog");
       } catch (error) {
         console.error("An error occurred", error);
         this.errorMessage = error.message;
@@ -54,4 +65,3 @@ export default {
   },
 };
 </script>
-

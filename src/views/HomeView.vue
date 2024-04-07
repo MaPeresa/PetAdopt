@@ -12,10 +12,12 @@
             Many paws out there are looking for a human, if you are looking for
             a paw, find your match now!
           </h2>
-          
-          <button type="button" class="btn btn-primary"><router-link to="/FindaDog" class="nav-link"
-                >Find a dog</router-link
-              ></button>
+
+          <button type="button" class="btn btn-primary">
+            <router-link to="/FindaDog" class="nav-link"
+              >Find a dog</router-link
+            >
+          </button>
         </div>
       </div>
     </div>
@@ -31,44 +33,38 @@
           class="modal fade"
           id="exampleModalToggle"
           aria-hidden="true"
-          aria-labelledby="exampleModalToggleLabel"
-          tabindex="-1"
-        >
+          aria-labelledby="ModalToggle"
+          tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
-                  Log In
-                </h1>
+                <h1 class="modal-title fs-5" id="ModalToggle">Log In</h1>
                 <button
                   type="button"
                   class="btn-close"
                   data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+                  aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <div class="container">
                   <div class="col">
                     <form>
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
+                        <label for="InputEmail">Email address</label>
                         <input
                           type="email"
                           class="form-control"
-                          id="exampleInputEmail1"
+                          id="InputEmail"
                           aria-describedby="emailHelp"
-                          placeholder="e.g. username@gmail.com"
-                        />
+                          placeholder="e.g. username@gmail.com" />
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
+                        <label for="InputPassword">Password</label>
                         <input
                           type="password"
                           class="form-control"
-                          id="exampleInputPassword1"
-                          placeholder="type your password"
-                        />
+                          id="InputPassword"
+                          placeholder="type your password" />
                       </div>
                       <button type="submit" class="btn btn-primary">
                         Log in
@@ -80,10 +76,9 @@
               <div class="modal-footer">
                 <button
                   class="btn btn-secondary"
-                  data-bs-target="#exampleModalToggle2"
+                  data-bs-target="#ModalToggle2"
                   data-bs-toggle="modal"
-                  style="margin: auto"
-                >
+                  style="margin: auto">
                   Don't have an account yet? Register
                 </button>
               </div>
@@ -92,77 +87,59 @@
         </div>
         <div
           class="modal fade"
-          id="exampleModalToggle2"
+          id="ModalToggle2"
           aria-hidden="true"
-          aria-labelledby="exampleModalToggleLabel2"
-          tabindex="-1"
-        >
+          aria-labelledby="ModalToggleLabel2"
+          tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">
+                <h1 class="modal-title fs-5" id="ModalToggleLabel2">
                   Register
                 </h1>
                 <button
                   type="button"
                   class="btn-close"
                   data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+                  aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <div class="container">
                   <div class="col">
                     <form>
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
+                        <label for="Email">Email address</label>
                         <input
                           type="email"
                           class="form-control"
-                          id="exampleInputEmail1"
+                          id="Email"
                           aria-describedby="emailHelp"
-                          placeholder="e.g. Username123"
-                        />
+                          placeholder="e.g. username@gmail.com" />
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
+                        <label for="phone">Phone number</label>
                         <input
-                          type="email"
+                          type="phone"
                           class="form-control"
-                          id="exampleInputEmail1"
-                          aria-describedby="emailHelp"
-                          placeholder="e.g. username@gmail.com"
-                        />
+                          id="phone"
+                          aria-describedby="phoneHelp"
+                          placeholder="+385 91 365 1230" />
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Phone number</label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="exampleInputEmail1"
-                          aria-describedby="emailHelp"
-                          placeholder="+385 91 365 1230"
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
+                        <label for="Password">Password</label>
                         <input
                           type="password"
                           class="form-control"
-                          id="exampleInputPassword1"
-                          placeholder="type your password"
-                        />
+                          id="Password"
+                          placeholder="type your password" />
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputPassword1"
-                          >Repeat Password</label
-                        >
+                        <label for="repeatPassword">Repeat Password</label>
                         <input
-                          type="password"
+                          type="repeatpassword"
                           class="form-control"
-                          id="exampleInputPassword1"
-                          placeholder="retype your password"
-                        />
+                          id="repeatPassword"
+                          placeholder="retype your password" />
                       </div>
                       <button type="submit" class="btn btn-primary">
                         Register
@@ -176,8 +153,7 @@
                   class="btn btn-secondary"
                   data-bs-target="#exampleModalToggle"
                   data-bs-toggle="modal"
-                  style="margin: auto"
-                >
+                  style="margin: auto">
                   Already have and account? Login
                 </button>
               </div>
@@ -188,8 +164,7 @@
           class="btn btn-secondary"
           data-bs-target="#exampleModalToggle"
           data-bs-toggle="modal"
-          style="margin-top: 6rem"
-        >
+          style="margin-top: 6rem">
           <b>Login</b>
         </button>
       </div>
@@ -199,13 +174,10 @@
 
 <script>
 // @ is an alias to /src
-import listing from "@/components/listing.vue";
 
 export default {
   name: "HomeView",
-  components: {
-    listing,
-  },
+  components: {},
 };
 </script>
 <style lang="scss">

@@ -3,7 +3,7 @@
     <div class="col-1"></div>
     <div class="col-2">
       <div class="filter-results">
-       <h3>Filter results</h3> 
+        <h3>Filter results</h3>
         <select class="form-select" aria-label="Country">
           <option selected disabled>Pick a country</option>
           <option value="1">Hrvatska</option>
@@ -22,7 +22,8 @@
     </div>
     <div class="col-8">
       <div class="listings-screen card text-center">
-        <div class="card-header">
+        <div
+          class="card-header d-flex justify-content-between align-items-center">
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
               <a class="nav-link active" aria-current="true" href="#">All</a>
@@ -34,9 +35,22 @@
               <a class="nav-link" href="#">Not adopted</a>
             </li>
           </ul>
+          <form
+            class="d-flex align-items-center"
+            role="search"
+            style="margin-left: 10px">
+            <input
+              v-model="store.searchTerm"
+              class="form-control me-2"
+              type="search"
+              placeholder="Search for a doggo"
+              aria-label="Search"
+              style="font-size: 14px" />
+          </form>
         </div>
-        <listing />
-        <listing />
+        {{ store.searchTerm }}
+
+        <listing :lists="filteredLists" />
       </div>
     </div>
   </div>
@@ -44,15 +58,69 @@
 
 <script>
 // @ is an alias to /src
+import store from "@/store";
 import listing from "@/components/listing.vue";
 
+let lists = [];
+lists = [
+  {
+    title: "aa",
+    petName: "Rbxex",
+    region: "Centralna Hrvatska",
+    country: "Hrvatska",
+    photo: require("@/assets/dog2.jpg"),
+    adopted: false,
+  },
+  {
+    title: "Doggo",
+    petName: "Rex",
+    region: "nesto",
+    country: "Njemacka",
+    photo: require("@/assets/dog2.jpg"),
+    adopted: true,
+  },
+  {
+    title: "Pup",
+    petName: "Rexii",
+    region: "Centralna Hrvatska",
+    country: "Hrvatska",
+    photo: require("@/assets/dog2.jpg"),
+    adopted: false,
+  },
+];
+
 export default {
-  name: "HomeView",
+  name: "FindaDog",
   components: {
     listing,
   },
+  data() {
+    return {
+      store: store,
+      lists: lists,
+    };
+  },
+  computed: {
+    filteredLists() {
+      let SearhTerm = this.store.searchTerm.toLowerCase();
+      return this.lists.filter((list) =>
+        ["title", "petName", "region", "country"].some((prop) =>
+          list[prop].toLowerCase().includes(SearhTerm)
+        )
+      );
+    },
+  },
+
+  /* return this.listings.filter((listing) => {
+        return listing.petName
+          .toLowerCase()
+          .includes(this.store.searchTerm.toLowerCase());
+      });
+    },
+  }, */
 };
 </script>
+
 <style lang="scss">
 .col-8 {
   flex: 0 0 auto;
@@ -100,5 +168,19 @@ a {
     background: rgba(254, 216, 80, 0.18);
     border-radius: 8px;
   }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-tabs {
+  margin-bottom: 0; /* Remove bottom margin from the nav-tabs */
+}
+
+.form-control {
+  height: calc(1.5em + 0.75rem + 2px); /* Match the height of the button */
 }
 </style>
