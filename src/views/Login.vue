@@ -10,7 +10,7 @@
               <label for="email">Email address</label>
               <input
                 type="email"
-                v-model.trim="email"
+                v-model="email"
                 class="form-control"
                 placeholder="Enter email"
                 required />
@@ -19,16 +19,18 @@
               <label for="password">Password</label>
               <input
                 type="password"
-                v-model.trim="password"
+                v-model="password"
                 class="form-control"
                 placeholder="Password"
                 required />
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="button" @click="login()" class="btn btn-primary">
+              Login
+            </button>
           </form>
-          <div v-if="errorMessage" class="alert alert-danger mt-3" role="alert">
+          <!-- <div v-if="errorMessage" class="alert alert-danger mt-3" role="alert">
             {{ errorMessage }}
-          </div>
+          </div> -->
         </div>
         <div class="col-sm"></div>
       </div>
@@ -38,6 +40,7 @@
 
 <script>
 import { firebase } from "@/firebase";
+import store from "@/store";
 
 export default {
   name: "login",
@@ -45,22 +48,25 @@ export default {
     return {
       email: "",
       password: "",
-      errorMessage: "",
     };
   },
   methods: {
-    async login() {
-      try {
-        await firebase
-          .auth()
-          .signInWithEmailAndPassword(this.email, this.password);
-        this.errorMessage = "";
-        console.log("Login successful");
-        this.$router.replace("/FindADog");
-      } catch (error) {
-        console.error("An error occurred", error);
-        this.errorMessage = error.message;
-      }
+    login() {
+      console.log("Logging in with", this.email);
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then((userCredential) => {
+          console.log("Login successful", userCredential.user.email);
+          store.currentUser = userCredential.user.email;
+          console.log("* store.currentUser", store.currentUser);
+
+          this.$router.replace("/FindADog");
+        })
+        .catch((error) => {
+          console.error("An error occurred", error);
+          alert("Error: " + error);
+        });
     },
   },
 };

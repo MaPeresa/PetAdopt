@@ -40,12 +40,23 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log("Route:", to.name); // Log the route name for debugging
+  console.log(
+    "From- to Route:",
+    from.name,
+    "->",
+    to.name,
+    "korisnik",
+    store.currentUser
+  ); // Log the route name for debugging
   console.log("Metadata:", to.meta); // Log the metadata object for debugging
 
+  next();
+
   const noUser = store.currentUser === null;
+  console.log("noUser", noUser);
 
   if (noUser && to.meta.requiresAuth) {
+    console.log("User isnt logged in, redirecting to login");
     next("login");
   } else {
     next();

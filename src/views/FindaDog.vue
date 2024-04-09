@@ -49,6 +49,79 @@
           </form>
         </div>
         {{ store.searchTerm }}
+        <div class="form-container">
+          <form @submit="addListing" class="mt-3">
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input
+                v-model="newTitle"
+                type="text"
+                class="form-control"
+                id="title"
+                required
+                placeholder="Enter the title here" />
+            </div>
+            <div class="mb-3">
+              <label for="petName" class="form-label">Pet Name</label>
+              <input
+                v-model="newPetName"
+                type="text"
+                class="form-control"
+                id="petName"
+                required
+                placeholder="Enter your pet's name" />
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea
+                v-model="newDescription"
+                class="form-control"
+                id="description"
+                required
+                style="height: 150px"
+                placeholder="Provide info such as age, gender, temper, health, known history etc."></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="region" class="form-label">Region</label>
+              <input
+                v-model="newRegion"
+                type="text"
+                class="form-control"
+                id="region"
+                required
+                placeholder="Region where the dog is located" />
+            </div>
+            <div class="mb-3">
+              <label for="country" class="form-label">Country</label>
+              <input
+                v-model="newCountry"
+                type="text"
+                class="form-control"
+                id="country"
+                required
+                placeholder="Enter the country" />
+            </div>
+            <div class="mb-3">
+              <label for="photo" class="form-label">Photo</label>
+              <input
+                v-model="newPhoto"
+                type="text"
+                class="form-control"
+                id="photo"
+                required
+                placeholder="Enter a photo URL" />
+            </div>
+            <div class="mb-3">
+              <input
+                v-model="newAdoptionStatus"
+                type="checkbox"
+                class="form-check-input"
+                id="adopted" />
+              <label class="form-check-label" for="adopted">Adopted</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Listing</button>
+          </form>
+        </div>
 
         <listing :lists="filteredLists" />
       </div>
@@ -60,6 +133,7 @@
 // @ is an alias to /src
 import store from "@/store";
 import listing from "@/components/listing.vue";
+import { db } from "@/firebase";
 
 let lists = [];
 lists = [
@@ -98,8 +172,54 @@ export default {
     return {
       store: store,
       lists: lists,
+      newTitle: "",
+      newPetName: "",
+      newDescription: "",
+      newRegion: "",
+      newCountry: "",
+      newPhoto: "",
+      newAdoptionStatus: false,
     };
   },
+  methods: {
+    addListing(event) {
+      event.preventDefault();
+      const title = this.newTitle;
+      const petName = this.newPetName;
+      const description = this.newDescription;
+      const region = this.newRegion;
+      const country = this.newCountry;
+      const photo = this.newPhoto;
+      const adopted = this.newAdoptionStatus;
+
+      db.collection("listings")
+        .add({
+          naslov: title,
+          imePsa: petName,
+          opis: description,
+          regija: region,
+          drzava: country,
+          slika: photo,
+          usvojen: adopted,
+          mail: store.currentUser,
+          postedAt: new Date(),
+        })
+        .then((doc) => {
+          console.log("Listing added", doc);
+          this.newTitle = "";
+          this.newPetName = "";
+          this.newDescription = "";
+          this.newRegion = "";
+          this.newCountry = "";
+          this.newPhoto = "";
+          this.newAdoptionStatus = false;
+        })
+        .catch((error) => {
+          console.error("Error adding listing: ", error);
+        });
+    },
+  },
+
   computed: {
     filteredLists() {
       let SearhTerm = this.store.searchTerm.toLowerCase();
@@ -110,18 +230,15 @@ export default {
       );
     },
   },
-
-  /* return this.listings.filter((listing) => {
-        return listing.petName
-          .toLowerCase()
-          .includes(this.store.searchTerm.toLowerCase());
-      });
-    },
-  }, */
 };
 </script>
 
 <style lang="scss">
+.form-container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+}
 .col-8 {
   flex: 0 0 auto;
   width: 66.66666667%;
@@ -130,8 +247,10 @@ export default {
 .mb-3 {
   margin: 1rem !important;
   border: 1px solid;
+  border-radius: 8px;
   border-color: #473a0b;
   color: #473a0b;
+  padding: 10px;
 }
 .img-fluid {
   max-width: 100%;
@@ -177,10 +296,10 @@ a {
 }
 
 .nav-tabs {
-  margin-bottom: 0; /* Remove bottom margin from the nav-tabs */
+  margin-bottom: 0;
 }
 
 .form-control {
-  height: calc(1.5em + 0.75rem + 2px); /* Match the height of the button */
+  height: calc(1.5em + 0.75rem + 2px);
 }
 </style>

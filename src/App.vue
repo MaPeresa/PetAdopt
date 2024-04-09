@@ -29,10 +29,20 @@
               <router-link to="/" class="nav-link">Home</router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/Login" class="nav-link">Login</router-link>
+              <router-link
+                v-if="!store.currentUser"
+                to="/Login"
+                class="nav-link"
+                >Login</router-link
+              >
             </li>
             <li class="nav-item">
-              <router-link to="/SignUp" class="nav-link">Sign up</router-link>
+              <router-link
+                v-if="!store.currentUser"
+                to="/SignUp"
+                class="nav-link"
+                >Sign up</router-link
+              >
             </li>
             <li class="nav-item">
               <router-link to="/MyListings" class="nav-link"
@@ -46,7 +56,7 @@
               >
             </li>
             <li class="nav-item">
-              <a href="#" @click="logout" class="nav-link">Log out</a>
+              <a href="#" @click.prevent="logout()" class="nav-link">Log out</a>
             </li>
           </ul>
         </div>
@@ -63,15 +73,20 @@ import { firebase } from "@/firebase";
 import router from "@/router";
 
 firebase.auth().onAuthStateChanged((user) => {
+  const currentRoute = router.currentRoute;
   if (user) {
     console.log("User is logged in", user.email);
     store.currentUser = user.email;
+  } else {
+    console.log("User is not logged in");
+    store.currentUser = null;
 
-    const currentRoute = router.currentRoute;
-    if (currentRoute.meta.requiresAuth) {
-      router.push("/Login");
-    }
+    router.push("/Login");
   }
+
+  /* if (currentRoute.meta.requiresAuth) {
+      router.push("/Login");
+    } */
 });
 
 export default {
@@ -82,14 +97,18 @@ export default {
     };
   },
   methods: {
-    async logout() {
-      try {
-        await firebase.auth().signOut();
-        console.log("User logged out");
-        this.$router.replace("/Login");
-      } catch (error) {
-        console.error("An error occurred", error);
-      }
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          console.log("User logged out");
+
+          this.$router.replace("/Login");
+        })
+        .catch((error) => {
+          console.error("An error occurred", error);
+        });
     },
   },
 };
