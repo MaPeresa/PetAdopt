@@ -59,7 +59,8 @@
                 class="form-control"
                 id="title"
                 required
-                placeholder="Enter the title here" />
+                placeholder="Enter the title here"
+                title="" />
             </div>
             <div class="mb-3">
               <label for="petName" class="form-label">Pet Name</label>
@@ -69,7 +70,33 @@
                 class="form-control"
                 id="petName"
                 required
-                placeholder="Enter your pet's name" />
+                placeholder="Enter your pet's name"
+                title="" />
+            </div>
+            <div class="mb-3">
+              <label for="age" class="form-label">Age</label>
+              <input
+                v-model="newAge"
+                type="number"
+                class="form-control"
+                id="age"
+                required
+                placeholder="Enter the pet's age"
+                title="Enter the pet's age in years" />
+            </div>
+            <div class="mb-3">
+              <label for="gender" class="form-label">Gender</label>
+              <select
+                v-model="newGender"
+                class="form-select"
+                id="gender"
+                required
+                title="Select the pet's gender">
+                <option disabled value="">Select gender</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Unknown</option>
+              </select>
             </div>
             <div class="mb-3">
               <label for="description" class="form-label">Description</label>
@@ -79,27 +106,39 @@
                 id="description"
                 required
                 style="height: 150px"
-                placeholder="Provide info such as age, gender, temper, health, known history etc."></textarea>
+                placeholder="Provide info such as age, gender, temper, health, known history etc."
+                title="Provide info such as age, gender, temper, health, known history etc."></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="country" class="form-label">Country</label>
+              <select
+                v-model="selectedCountry"
+                class="form-select"
+                aria-label="Country">
+                <option disabled value="">Select a country</option>
+                <option
+                  v-for="country in countries"
+                  :key="country.id"
+                  :value="country.id">
+                  {{ country.name }}
+                </option>
+              </select>
             </div>
             <div class="mb-3">
               <label for="region" class="form-label">Region</label>
-              <input
+              <select
                 v-model="newRegion"
-                type="text"
-                class="form-control"
-                id="region"
-                required
-                placeholder="Region where the dog is located" />
-            </div>
-            <div class="mb-3">
-              <label for="country" class="form-label">Country</label>
-              <input
-                v-model="newCountry"
-                type="text"
-                class="form-control"
-                id="country"
-                required
-                placeholder="Enter the country" />
+                class="form-select"
+                aria-label="Region">
+                <option disabled value="">Select a region</option>
+                <option
+                  v-for="region in filteredRegions"
+                  :key="region.id"
+                  :value="region.name">
+                  {{ region.name }}
+                </option>
+              </select>
             </div>
             <div class="mb-3">
               <label for="photo" class="form-label">Photo</label>
@@ -109,7 +148,8 @@
                 class="form-control"
                 id="photo"
                 required
-                placeholder="Enter a photo URL" />
+                placeholder="Enter a photo URL"
+                title="" />
             </div>
             <div class="mb-3">
               <input
@@ -135,8 +175,8 @@ import store from "@/store";
 import listing from "@/components/listing.vue";
 import { db } from "@/firebase";
 
-let lists = [];
-lists = [
+/*let lists = [];
+ lists = [
   {
     title: "aa",
     petName: "Rbxex",
@@ -162,7 +202,7 @@ lists = [
     adopted: false,
   },
 ];
-
+ */
 export default {
   name: "FindaDog",
   components: {
@@ -171,7 +211,7 @@ export default {
   data() {
     return {
       store: store,
-      lists: lists,
+      lists: [],
       newTitle: "",
       newPetName: "",
       newDescription: "",
@@ -179,9 +219,67 @@ export default {
       newCountry: "",
       newPhoto: "",
       newAdoptionStatus: false,
+      newAge: "",
+      newGender: "",
+      countries: [
+        { id: 1, name: "Hrvatska" },
+        { id: 2, name: "Germany" },
+        { id: 3, name: "Slovenija" },
+      ],
+      regions: [
+        { id: 1, countryId: 1, name: "Centralna Hrvatska" },
+        { id: 2, countryId: 1, name: "Dalmacija" },
+        { id: 3, countryId: 1, name: "Istra" },
+        { id: 4, countryId: 1, name: "Slavonija" },
+        { id: 5, countryId: 2, name: "Bayern" },
+        { id: 6, countryId: 2, name: "Hessern" },
+        { id: 7, countryId: 2, name: "Sachsen" },
+        { id: 8, countryId: 3, name: "Gorenjska" },
+        { id: 9, countryId: 3, name: "Goriška" },
+        { id: 10, countryId: 3, name: "Obalno-kraška" },
+      ],
+      selectedCountry: null,
     };
   },
+  mounted() {
+    //DOHVAT IZ FIREBASE
+    this.getPosts();
+  },
   methods: {
+    getPosts() {
+      console.log("firebase dohvat");
+
+      db.collection("listings")
+        .orderBy("postedAt", "desc")
+        .limit(8)
+        .get()
+        .then((query) => {
+          this.lists = [];
+          query.forEach((doc) => {
+            console.log("ID:", doc.id);
+            console.log("Data:", doc.data());
+
+            //this.lists.push(doc.data());
+            const data = doc.data();
+
+            this.lists.push({
+              id: doc.id,
+              naslov: data.naslov,
+              imePsa: data.imePsa,
+              opis: data.opis,
+              regija: data.regija,
+              drzava: data.drzava,
+              slika: data.slika,
+              usvojen: data.usvojen,
+              mail: data.mail,
+              postedAt: new Date(),
+              godine: data.godine,
+              spol: data.spol,
+            });
+          });
+        });
+    },
+
     addListing(event) {
       event.preventDefault();
       const title = this.newTitle;
@@ -191,6 +289,8 @@ export default {
       const country = this.newCountry;
       const photo = this.newPhoto;
       const adopted = this.newAdoptionStatus;
+      const age = this.newAge;
+      const gender = this.newGender;
 
       db.collection("listings")
         .add({
@@ -203,6 +303,8 @@ export default {
           usvojen: adopted,
           mail: store.currentUser,
           postedAt: new Date(),
+          godine: age,
+          spol: gender,
         })
         .then((doc) => {
           console.log("Listing added", doc);
@@ -213,19 +315,36 @@ export default {
           this.newCountry = "";
           this.newPhoto = "";
           this.newAdoptionStatus = false;
+          this.newAge = "";
+          this.newGender = "";
+
+          this.getPosts();
         })
         .catch((error) => {
           console.error("Error adding listing: ", error);
         });
     },
   },
-
+  watch: {
+    selectedCountry(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.newRegion = ""; // Reset the region selection
+      }
+    },
+  },
   computed: {
+    filteredRegions() {
+      if (!this.selectedCountry) return [];
+      return this.regions.filter(
+        (region) => region.countryId === this.selectedCountry
+      );
+    },
+
     filteredLists() {
-      let SearhTerm = this.store.searchTerm.toLowerCase();
+      let searchTerm = this.store.searchTerm.toLowerCase();
       return this.lists.filter((list) =>
-        ["title", "petName", "region", "country"].some((prop) =>
-          list[prop].toLowerCase().includes(SearhTerm)
+        ["naslov", "imePsa", "regija", "drzava", "spol"].some((prop) =>
+          list[prop]?.toLowerCase().includes(searchTerm)
         )
       );
     },
@@ -235,7 +354,7 @@ export default {
 
 <style lang="scss">
 .form-container {
-  max-width: 700px;
+  max-width: 900px;
   margin: auto;
   padding: 20px;
 }

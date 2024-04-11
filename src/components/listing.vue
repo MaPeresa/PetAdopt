@@ -6,30 +6,27 @@
     :key="list">
     <div class="row g-0">
       <div class="col-md-4">
-        <img :src="dog.photo" class="img-fluid rounded-start" alt="" />
+        <img :src="dog.slika" class="img-fluid rounded-start" alt="" />
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">{{ dog.title }}</h5>
-          <p class="card-text">
-            This is {{ dog.petName }}. He is 5 years old and looking for a new
-            home. He has been chipped, regularly vaccinated and has not been
-            spayed. {{ dog.petName }} is very friendly with kids and loves a lot
-            of outdoor time.
-          </p>
+          <h5 class="card-title">{{ dog.naslov }}</h5>
+          <p class="card-text">This is {{ dog.imePsa }}. {{ dog.opis }}</p>
           <p class="card-text">
             <small class="text-body-secondary"
-              >{{ dog.petName }} | 5 years old | male</small
+              >{{ dog.imePsa }} | {{ dog.godine }} | {{ dog.spol }}</small
             >
           </p>
           <p class="card-text">
             <small class="text-body-secondary"
-              >Location: {{ dog.region }}, {{ dog.country }}</small
+              >Location: {{ dog.regija }}, {{ dog.drzava }}</small
             >
           </p>
           <p class="card-text">
             <small class="text-body-secondary"
-              >Adopted: {{ dog.adopted }}</small
+              >Adopted: {{ dog.usvojen }} Date posted:{{
+                dog.postedAt.toLocaleDateString()
+              }}</small
             >
           </p>
         </div>
