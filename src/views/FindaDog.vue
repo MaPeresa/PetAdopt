@@ -48,10 +48,11 @@
               style="font-size: 14px" />
           </form>
         </div>
-        {{ store.searchTerm }}
-        <div class="form-container">
-          <form @submit="addListing" class="mt-3">
-            <div class="mb-3">
+        <!-- {{ store.searchTerm }} -->
+
+        <div class="container-lg">
+          <form @submit="addListing" class="form-inline mb-5">
+            <div class="form group">
               <label for="title" class="form-label">Title</label>
               <input
                 v-model="newTitle"
@@ -62,7 +63,7 @@
                 placeholder="Enter the title here"
                 title="" />
             </div>
-            <div class="mb-3">
+            <div class="form group">
               <label for="petName" class="form-label">Pet Name</label>
               <input
                 v-model="newPetName"
@@ -73,7 +74,7 @@
                 placeholder="Enter your pet's name"
                 title="" />
             </div>
-            <div class="mb-3">
+            <div class="form group">
               <label for="age" class="form-label">Age</label>
               <input
                 v-model="newAge"
@@ -84,7 +85,7 @@
                 placeholder="Enter the pet's age"
                 title="Enter the pet's age in years" />
             </div>
-            <div class="mb-3">
+            <div class="form group">
               <label for="gender" class="form-label">Gender</label>
               <select
                 v-model="newGender"
@@ -98,7 +99,7 @@
                 <option value="Other">Unknown</option>
               </select>
             </div>
-            <div class="mb-3">
+            <div class="form group">
               <label for="description" class="form-label">Description</label>
               <textarea
                 v-model="newDescription"
@@ -110,7 +111,7 @@
                 title="Provide info such as age, gender, temper, health, known history etc."></textarea>
             </div>
 
-            <div class="mb-3">
+            <div class="form group">
               <label for="country" class="form-label">Country</label>
               <select
                 v-model="selectedCountry"
@@ -125,7 +126,7 @@
                 </option>
               </select>
             </div>
-            <div class="mb-3">
+            <div class="form group">
               <label for="region" class="form-label">Region</label>
               <select
                 v-model="newRegion"
@@ -140,7 +141,7 @@
                 </option>
               </select>
             </div>
-            <div class="mb-3">
+            <div class="form group">
               <label for="photo" class="form-label">Photo</label>
               <input
                 v-model="newPhoto"
@@ -151,7 +152,7 @@
                 placeholder="Enter a photo URL"
                 title="" />
             </div>
-            <div class="mb-3">
+            <div class="form group">
               <input
                 v-model="newAdoptionStatus"
                 type="checkbox"
@@ -175,34 +176,6 @@ import store from "@/store";
 import listing from "@/components/listing.vue";
 import { db } from "@/firebase";
 
-/*let lists = [];
- lists = [
-  {
-    title: "aa",
-    petName: "Rbxex",
-    region: "Centralna Hrvatska",
-    country: "Hrvatska",
-    photo: require("@/assets/dog2.jpg"),
-    adopted: false,
-  },
-  {
-    title: "Doggo",
-    petName: "Rex",
-    region: "nesto",
-    country: "Njemacka",
-    photo: require("@/assets/dog2.jpg"),
-    adopted: true,
-  },
-  {
-    title: "Pup",
-    petName: "Rexii",
-    region: "Centralna Hrvatska",
-    country: "Hrvatska",
-    photo: require("@/assets/dog2.jpg"),
-    adopted: false,
-  },
-];
- */
 export default {
   name: "FindaDog",
   components: {
@@ -272,7 +245,7 @@ export default {
               slika: data.slika,
               usvojen: data.usvojen,
               mail: data.mail,
-              postedAt: new Date(),
+              postedAt: data.postedAt.toDate(),
               godine: data.godine,
               spol: data.spol,
             });
@@ -328,7 +301,7 @@ export default {
   watch: {
     selectedCountry(newVal, oldVal) {
       if (newVal !== oldVal) {
-        this.newRegion = ""; // Reset the region selection
+        this.newRegion = ""; // reset regiju kad se promijeni drzava
       }
     },
   },
@@ -362,19 +335,6 @@ export default {
   flex: 0 0 auto;
   width: 66.66666667%;
   padding-top: 1em;
-}
-.mb-3 {
-  margin: 1rem !important;
-  border: 1px solid;
-  border-radius: 8px;
-  border-color: #473a0b;
-  color: #473a0b;
-  padding: 10px;
-}
-.img-fluid {
-  max-width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .filter-results {

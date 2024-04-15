@@ -174,6 +174,23 @@ export default {
   width: 400px;
 }
 
+.listings-screen {
+  margin-bottom: 1rem;
+}
+.mb-3 {
+  margin: 1rem !important;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: #473a0b;
+  color: #473a0b;
+  padding: 10px;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 nav {
   padding: 30px;
   background-color: #473a0b !important;

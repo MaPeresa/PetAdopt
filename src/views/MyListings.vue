@@ -1,45 +1,139 @@
 <template>
   <div class="container-lg">
-    <div class="col-6">
-      <form @submit.prevent="postNewListing" class="form-inline mb-5">
-        <div class="form-group">
-          <label for="dogName">Dog name</label>
-          <input
-            v-model="dogName"
-            type="text"
-            class="form-control ml-2"
-            placeholder="Enter the name"
-            id="dogName" />
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Create a new listing
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form @submit="addListing" class="form-inline mb-5">
+              <div class="form group">
+                <label for="title" class="form-label">Title</label>
+                <input
+                  v-model="newTitle"
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  required
+                  placeholder="Enter the title here"
+                  title="" />
+              </div>
+              <div class="form group">
+                <label for="petName" class="form-label">Pet Name</label>
+                <input
+                  v-model="newPetName"
+                  type="text"
+                  class="form-control"
+                  id="petName"
+                  required
+                  placeholder="Enter your pet's name"
+                  title="" />
+              </div>
+              <div class="form group">
+                <label for="age" class="form-label">Age</label>
+                <input
+                  v-model="newAge"
+                  type="number"
+                  class="form-control"
+                  id="age"
+                  required
+                  placeholder="Enter the pet's age"
+                  title="Enter the pet's age in years" />
+              </div>
+              <div class="form group">
+                <label for="gender" class="form-label">Gender</label>
+                <select
+                  v-model="newGender"
+                  class="form-select"
+                  id="gender"
+                  required
+                  title="Select the pet's gender">
+                  <option disabled value="">Select gender</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Other">Unknown</option>
+                </select>
+              </div>
+              <div class="form group">
+                <label for="description" class="form-label">Description</label>
+                <textarea
+                  v-model="newDescription"
+                  class="form-control"
+                  id="description"
+                  required
+                  style="height: 150px"
+                  placeholder="Provide info such as age, gender, temper, health, known history etc."
+                  title="Provide info such as age, gender, temper, health, known history etc."></textarea>
+              </div>
+
+              <div class="form group">
+                <label for="country" class="form-label">Country</label>
+                <select
+                  v-model="selectedCountry"
+                  class="form-select"
+                  aria-label="Country">
+                  <option disabled value="">Select a country</option>
+                  <option
+                    v-for="country in countries"
+                    :key="country.id"
+                    :value="country.name">
+                    {{ country.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="form group">
+                <label for="region" class="form-label">Region</label>
+                <select
+                  v-model="newRegion"
+                  class="form-select"
+                  aria-label="Region">
+                  <option disabled value="">Select a region</option>
+                  <option
+                    v-for="region in filteredRegions"
+                    :key="region.id"
+                    :value="region.name">
+                    {{ region.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="form group">
+                <label for="photo" class="form-label">Photo</label>
+                <input
+                  v-model="newPhoto"
+                  type="text"
+                  class="form-control"
+                  id="photo"
+                  required
+                  placeholder="Enter a photo URL"
+                  title="" />
+              </div>
+              <div class="form group">
+                <input
+                  v-model="newAdoptionStatus"
+                  type="checkbox"
+                  class="form-check-input"
+                  id="adopted" />
+                <label class="form-check-label" for="adopted">Adopted</label>
+              </div>
+              <button type="submit" class="btn btn-primary">Add Listing</button>
+            </form>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="gender">gender</label>
-          <input
-            v-model="gender"
-            type="text"
-            class="form-control ml-2"
-            placeholder="Enter the gender"
-            id="gender" />
-        </div>
-        <div class="form-group">
-          <label for="age">age</label>
-          <input
-            v-model="age"
-            type="text"
-            class="form-control ml-2"
-            placeholder="Enter the age"
-            id="age" />
-        </div>
-        <div class="form-group">
-          <label for="listingDescription">Listing description</label>
-          <input
-            v-model="listingDescription"
-            type="text"
-            class="form-control ml-2"
-            placeholder="Enter description"
-            id="listingDescription" />
-        </div>
-        <button type="submit" class="btn btn-primary ml-2">Post listing</button>
-      </form>
+      </div>
     </div>
 
     <div id="listings-screen" class="card text-center">
@@ -78,13 +172,18 @@
           </button>
         </div>
       </div>
-      <listing :listings="listings" />
+      <listing :lists="filteredLists" />
       <p class="d-inline-flex gap-1">
         <button class="btn btn-secondary" style="margin: auto">
           <b>Add dog</b>
         </button>
 
-        <button class="btn btn-primary" style="margin: auto">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          style="margin: auto">
           Create a new listing
         </button>
       </p>
@@ -95,72 +194,137 @@
 <script>
 // @ is an alias to /src
 import listing from "@/components/listing.vue";
+import { db } from "@/firebase";
+import store from "@/store";
 
 export default {
-  name: "HomeView",
+  name: "Mylistings",
   components: {
     listing,
   },
   data() {
     return {
-      dogName: "",
-      gender: "",
-      age: "",
-      listingDescription: "",
       listings: [],
+      filteredLists: [],
+      store: store,
+      newTitle: "",
+      newPetName: "",
+      newDescription: "",
+      newRegion: "",
+      newCountry: "",
+      newPhoto: "",
+      newAdoptionStatus: false,
+      newAge: "",
+      newGender: "",
+      countries: [
+        { id: 1, name: "Hrvatska" },
+        { id: 2, name: "Germany" },
+        { id: 3, name: "Slovenija" },
+      ],
+      regions: [
+        { id: 1, countryId: 1, name: "Centralna Hrvatska" },
+        { id: 2, countryId: 1, name: "Dalmacija" },
+        { id: 3, countryId: 1, name: "Istra" },
+        { id: 4, countryId: 1, name: "Slavonija" },
+        { id: 5, countryId: 2, name: "Bayern" },
+        { id: 6, countryId: 2, name: "Hessern" },
+        { id: 7, countryId: 2, name: "Sachsen" },
+        { id: 8, countryId: 3, name: "Gorenjska" },
+        { id: 9, countryId: 3, name: "Goriška" },
+        { id: 10, countryId: 3, name: "Obalno-kraška" },
+      ],
+      selectedCountry: null,
     };
   },
+  mounted() {
+    this.fetchListings();
+  },
   methods: {
-    postNewListing() {
-      const dogName = this.dogName;
-      const gender = this.gender;
-      const age = this.age;
-      const listingDescription = this.listingDescription;
-
-      db.collection("listings").add({
-        Name: dogName,
-        Gend: gender,
-        Age: age,
-        Description: listingDescription,
-        email: store.currentUser.email,
+    fetchListings() {
+      db.collection("listings")
+        .orderBy("postedAt", "desc")
+        .get()
+        .then((querySnapshot) => {
+          this.listings = [];
+          querySnapshot.forEach((doc) => {
+            let listing = doc.data();
+            listing.id = doc.id;
+            listing.postedAt = listing.postedAt.toDate();
+            this.listings.push(listing);
+          });
+          this.FilteredUsersListings();
+        })
+        .catch((error) => {
+          console.error("Error fetching listings:", error);
+        });
+    },
+    FilteredUsersListings() {
+      const currentUserEmail = store.currentUser;
+      this.filteredLists = this.listings.filter(
+        (listing) => listing.mail === currentUserEmail
+      );
+    },
+    addListing(event) {
+      event.preventDefault();
+      const listingData = {
+        naslov: this.newTitle,
+        imePsa: this.newPetName,
+        opis: this.newDescription,
+        regija: this.newRegion,
+        drzava: this.selectedCountry,
+        slika: this.newPhoto,
+        usvojen: this.newAdoptionStatus,
+        mail: store.currentUser.email,
         postedAt: new Date(),
-      });
+        godine: this.newAge,
+        spol: this.newGender,
+      };
 
-      console.log(dogName, gender, age, listingDescription);
+      db.collection("listings")
+        .add(listingData)
+        .then((doc) => {
+          console.log("Listing added", doc);
+          this.resetForm();
+          this.fetchListings();
+        })
+        .catch((error) => {
+          console.error("Error adding listing: ", error);
+        });
+    },
+
+    resetForm() {
+      this.newTitle = "";
+      this.newPetName = "";
+      this.newDescription = "";
+      this.newRegion = "";
+      this.selectedCountry = "";
+      this.newPhoto = "";
+      this.newAdoptionStatus = false;
+      this.newAge = "";
+      this.newGender = "";
+    },
+  },
+  watch: {
+    selectedCountry(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.newRegion = ""; // reset regiju kad se promijeni drzava
+      }
+    },
+  },
+  computed: {
+    filteredRegions() {
+      if (!this.selectedCountry) return [];
+      const selectedCountryId = this.countries.find(
+        (c) => c.name === this.selectedCountry
+      )?.id;
+      return this.regions.filter(
+        (region) => region.countryId === selectedCountryId
+      );
     },
   },
 };
 </script>
 <style lang="scss">
-.col-8 {
-  flex: 0 0 auto;
-  width: 66.66666667%;
-  padding-top: 1em;
-}
-.mb-3 {
-  margin: 1rem !important;
-  border: 1px solid;
-  border-color: #473a0b;
-  color: #473a0b;
-}
-.img-fluid {
-  max-width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.filter-results {
-  background-color: #473a0b14;
-  border: 1px solid;
-  border-color: #473a0b;
-  border-radius: 8px;
-  height: auto;
-  position: relative;
-  width: max-width;
-  padding: 1em;
-  margin-top: 1rem;
-}
-
 .form-select {
   margin-top: 0.5em;
 }

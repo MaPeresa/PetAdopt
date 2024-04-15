@@ -3,7 +3,7 @@
     class="card mb-3"
     style="max-width: 1440px"
     v-for="dog in lists"
-    :key="list">
+    :key="dog.id">
     <div class="row g-0">
       <div class="col-md-4">
         <img :src="dog.slika" class="img-fluid rounded-start" alt="" />
