@@ -128,7 +128,7 @@ export default {
 }
 
 .btn-primary {
-  --bs-btn-color: #fed850;
+  --bs-btn-color: #fed850 !important;
   --bs-btn-bg: rgba(254, 216, 80, 0.18);
   --bs-btn-border-color: #473a0b;
   --bs-btn-hover-color: #473a0b;
@@ -175,6 +175,18 @@ export default {
 }
 
 .listings-screen {
+  background-color: #473a0b14;
+  border: 1px solid;
+  border-color: #473a0b;
+  border-radius: 8px;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  width: 914px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+
   margin-bottom: 1rem;
 }
 .mb-3 {

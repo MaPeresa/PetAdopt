@@ -2,33 +2,36 @@
   <div
     class="card mb-3"
     style="max-width: 1440px"
-    v-for="dog in lists"
-    :key="dog.id">
+    v-for="list in lists"
+    :key="list.id">
     <div class="row g-0">
       <div class="col-md-4">
-        <img :src="dog.slika" class="img-fluid rounded-start" alt="" />
+        <img :src="list.slika" class="img-fluid rounded-start" />
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">{{ dog.naslov }}</h5>
-          <p class="card-text">This is {{ dog.imePsa }}. {{ dog.opis }}</p>
+          <h5 class="card-title">{{ list.naslov }}</h5>
+          <p class="card-text">This is {{ list.imePsa }}. {{ list.opis }}</p>
           <p class="card-text">
             <small class="text-body-secondary"
-              >{{ dog.imePsa }} | {{ dog.godine }} | {{ dog.spol }}</small
+              >{{ list.imePsa }} | {{ list.godine }} | {{ list.spol }}</small
             >
           </p>
           <p class="card-text">
             <small class="text-body-secondary"
-              >Location: {{ dog.regija }}, {{ dog.drzava }}</small
+              >Location: {{ list.regija }}, {{ list.drzava }}</small
             >
           </p>
           <p class="card-text">
-            <small class="text-body-secondary"
-              >Adopted: {{ dog.usvojen }} Date posted:{{
-                dog.postedAt.toLocaleDateString()
-              }}</small
+            <small class="text-body-secondary">Contact: {{ list.mail }} </small>
+          </p>
+          <p class="card-text">
+            <small class="text-body-secondary">
+              Posted:
+              {{ list.postedAt.toLocaleDateString() }}</small
             >
           </p>
+          <slot name="actions" :list="list"></slot>
         </div>
       </div>
     </div>
