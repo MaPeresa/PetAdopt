@@ -11,6 +11,11 @@
             class="btn">
             {{ list.usvojen ? "Mark as Not Adopted" : "Mark as Adopted" }}
           </button>
+          <button
+            @click="deleteListing(list)"
+            class="btn btn-danger">
+            Delete
+          </button>
         </template>
       </listing>
       <p class="d-inline-flex gap-1">
@@ -90,6 +95,20 @@ export default {
         })
         .catch((error) => {
           console.error("Error updating listing:", error);
+        });
+    },
+    deleteListing(listing) {
+      db.collection("listings")
+        .doc(listing.id)
+        .delete()
+        .then(() => {
+          this.filteredLists = this.filteredLists.filter(
+            (l) => l.id !== listing.id
+          );
+          alert("Listing deleted successfully.");
+        })
+        .catch((error) => {
+          console.error("Error deleting listing:", error);
         });
     },
   },
