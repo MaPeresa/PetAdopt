@@ -110,13 +110,12 @@
             <div class="form group">
               <label for="photo" class="form-label">Photo</label>
               <input
-                v-model="newPhoto"
-                type="text"
+                type="file"
                 class="form-control"
                 id="photo"
+                @change="handleFileUpload"
                 required
-                placeholder="Enter a photo URL"
-                title="" />
+                accept="image/*" />
             </div>
             <div class="form-group">
               <input
@@ -142,6 +141,8 @@
 <script>
 import { db } from "@/firebase";
 import store from "@/store";
+import firebase from "firebase/app";
+import "firebase/storage";
 
 export default {
   name: "NewListingModal",
@@ -154,7 +155,7 @@ export default {
       newDescription: "",
       newAdoptionStatus: false,
       newRegion: "",
-      newPhoto: "",
+      newPhoto: null,
       selectedCountry: "",
       countries: [
         { id: 1, name: "Hrvatska" },
@@ -179,13 +180,43 @@ export default {
   methods: {
     addListing(event) {
       event.preventDefault();
+      const user = firebase.auth().currentUser; // Get the current user
+      if (this.newPhoto && user) {
+        const storageRef = firebase
+          .storage()
+          .ref(`listings/${user.uid}/${this.newPhoto.name}`);
+        const uploadTask = storageRef.put(this.newPhoto);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Optional: Handle progress
+          },
+          (error) => {
+            console.error("Error uploading file:", error);
+          },
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              this.saveListing(downloadURL);
+            });
+          }
+        );
+      } else {
+        console.error("User is not authenticated or photo is not selected.");
+      }
+    },
+    handleFileUpload(event) {
+      const file = event.target.files[0];
+      this.newPhoto = file;
+    },
+    saveListing(photoUrl) {
       const listingData = {
         naslov: this.newTitle,
         imePsa: this.newPetName,
         opis: this.newDescription,
         regija: this.newRegion,
         drzava: this.selectedCountry,
-        slika: this.newPhoto,
+        slika: photoUrl,
         usvojen: this.newAdoptionStatus,
         mail: store.currentUser,
         postedAt: new Date(),
