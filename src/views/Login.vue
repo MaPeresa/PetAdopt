@@ -57,9 +57,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
-          console.log("Login successful", userCredential.user.email);
           store.currentUser = userCredential.user.email;
-          console.log("* store.currentUser", store.currentUser);
 
           this.$router.replace("/FindADog");
         })

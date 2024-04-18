@@ -4,7 +4,6 @@
     rel="stylesheet" />
   <div id="app">
     <nav id="nav" class="navbar navbar-expand-lg navbar-light">
-      <!--Image and text-->
       <div class="container-fluid">
         <a class="navbar-brand">
           <img
@@ -28,41 +27,29 @@
             <li class="nav-item active">
               <router-link to="/" class="nav-link">Home</router-link>
             </li>
-            <li class="nav-item">
-              <router-link
-                v-if="!store.currentUser"
-                to="/Login"
-                class="nav-link"
-                >Login</router-link
-              >
+            <li v-if="!store.currentUser" class="nav-item">
+              <router-link to="/Login" class="nav-link">Login</router-link>
             </li>
-            <li class="nav-item">
-              <router-link
-                v-if="!store.currentUser"
-                to="/SignUp"
-                class="nav-link"
-                >Sign up</router-link
-              >
+            <li v-if="!store.currentUser" class="nav-item">
+              <router-link to="/SignUp" class="nav-link">Sign up</router-link>
             </li>
-            <li class="nav-item">
+            <li v-if="store.currentUser" class="nav-item">
               <router-link to="/MyListings" class="nav-link"
                 >My Listings</router-link
               >
             </li>
-
             <li class="nav-item">
               <router-link to="/FindaDog" class="nav-link"
                 >Find a dog</router-link
               >
             </li>
-            <li class="nav-item">
-              <a href="#" @click.prevent="logout()" class="nav-link">Log out</a>
+            <li v-if="store.currentUser" class="nav-item">
+              <a @click.prevent="logout" class="nav-link">Log out</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-
     <router-view />
   </div>
 </template>
@@ -72,29 +59,10 @@ import store from "@/store";
 import { firebase } from "@/firebase";
 import router from "@/router";
 
-firebase.auth().onAuthStateChanged((user) => {
-  const currentRoute = router.currentRoute;
-  if (user) {
-    console.log("User is logged in", user.email);
-    store.currentUser = user.email;
-  } else {
-    console.log("User is not logged in");
-    store.currentUser = null;
-
-    router.push("/Login");
-  }
-
-  /* if (currentRoute.meta.requiresAuth) {
-      router.push("/Login");
-    } */
-});
-
 export default {
   name: "App",
-  data() {
-    return {
-      store,
-    };
+  setup() {
+    return { store };
   },
   methods: {
     logout() {
@@ -103,8 +71,7 @@ export default {
         .signOut()
         .then(() => {
           console.log("User logged out");
-
-          this.$router.replace("/Login");
+          router.push("/Login");
         })
         .catch((error) => {
           console.error("An error occurred", error);
@@ -175,6 +142,7 @@ export default {
 }
 
 .listings-screen {
+  margin-bottom: 1rem;
   background-color: #473a0b14;
   border: 1px solid;
   border-color: #473a0b;
@@ -186,8 +154,6 @@ export default {
   margin-left: auto;
   margin-right: auto;
   margin-top: 2rem;
-
-  margin-bottom: 1rem;
 }
 .mb-3 {
   margin: 1rem !important;

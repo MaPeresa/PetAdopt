@@ -47,10 +47,7 @@ router.beforeEach((to, from, next) => {
     to.name,
     "korisnik",
     store.currentUser
-  ); // Log the route name for debugging
-  console.log("Metadata:", to.meta); // Log the metadata object for debugging
-
-  next();
+  );
 
   const noUser = store.currentUser === null;
   console.log("noUser", noUser);
