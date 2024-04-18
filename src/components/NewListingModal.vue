@@ -174,7 +174,6 @@ export default {
         { id: 9, countryId: 3, name: "Goriška" },
         { id: 10, countryId: 3, name: "Obalno-kraška" },
       ],
-      filteredRegions: [],
     };
   },
   methods: {

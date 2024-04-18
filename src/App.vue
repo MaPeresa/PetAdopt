@@ -59,6 +59,23 @@ import store from "@/store";
 import { firebase } from "@/firebase";
 import router from "@/router";
 
+firebase.auth().onAuthStateChanged((user) => {
+  const currentRoute = router.currentRoute;
+  if (user) {
+    console.log("User is logged in", user.email);
+    store.currentUser = user.email;
+  } else {
+    console.log("User is not logged in");
+    store.currentUser = null;
+
+    router.push("/Login");
+  }
+
+  /* if (currentRoute.meta.requiresAuth) {
+      router.push("/Login");
+    } */
+});
+
 export default {
   name: "App",
   setup() {
@@ -71,6 +88,7 @@ export default {
         .signOut()
         .then(() => {
           console.log("User logged out");
+          store.currentUser = null;
           router.push("/Login");
         })
         .catch((error) => {
