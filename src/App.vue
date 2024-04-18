@@ -67,13 +67,7 @@ firebase.auth().onAuthStateChanged((user) => {
   } else {
     console.log("User is not logged in");
     store.currentUser = null;
-
-    router.push("/Login");
   }
-
-  /* if (currentRoute.meta.requiresAuth) {
-      router.push("/Login");
-    } */
 });
 
 export default {
