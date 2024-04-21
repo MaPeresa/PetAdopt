@@ -72,6 +72,7 @@ export default {
         .createUserWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
           console.log("User signed up", userCredential.user);
+          this.$router.push({ name: "FindaDog" });
         })
         .catch(function (error) {
           console.error("Error signing up", error);

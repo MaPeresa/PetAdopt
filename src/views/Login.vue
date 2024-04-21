@@ -58,7 +58,7 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
           store.currentUser = userCredential.user.email;
-
+          localStorage.setItem("currentUser", userCredential.user.email);
           this.$router.replace("/FindADog");
         })
         .catch((error) => {

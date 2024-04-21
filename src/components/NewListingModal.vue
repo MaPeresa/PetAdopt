@@ -228,7 +228,7 @@ export default {
         .then(() => {
           this.resetForm();
           this.$router.push({ name: "MyListings" }).then(() => {
-            window.location.reload();
+            this.$emit("listingAdded");
           });
         })
         .catch((error) => {

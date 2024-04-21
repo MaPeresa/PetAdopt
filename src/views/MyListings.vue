@@ -1,6 +1,6 @@
 <template>
   <div class="container-lg">
-    <NewListingModal />
+    <NewListingModal @listingAdded="fetchListings" />
 
     <div id="listings-screen" class="card text-center">
       <listing :lists="filteredLists">
