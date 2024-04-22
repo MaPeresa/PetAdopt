@@ -59,7 +59,7 @@ import store from "@/store";
 import { firebase } from "@/firebase";
 import router from "@/router";
 
-firebase.auth().onAuthStateChanged((user) => {
+/* firebase.auth().onAuthStateChanged((user) => {
   const currentRoute = router.currentRoute;
   if (user) {
     console.log("User is logged in", user.email);
@@ -68,7 +68,7 @@ firebase.auth().onAuthStateChanged((user) => {
     console.log("User is not logged in");
     store.currentUser = null;
   }
-});
+}); */
 
 export default {
   name: "App",

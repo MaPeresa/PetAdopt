@@ -39,22 +39,15 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  console.log(
-    "From- to Route:",
-    from.name,
-    "->",
-    to.name,
-    "korisnik",
-    store.currentUser
-  );
+router.beforeEach(async (to, from, next) => {
+  const isAuthenticated = await store.checkAuth(); // Await for auth check
 
-  const noUser = store.currentUser === null;
-  console.log("noUser", noUser);
-
-  if (noUser && to.meta.requiresAuth) {
-    console.log("User isnt logged in, redirecting to login");
-    next("login");
+  if (isAuthenticated && ["Login", "SignUp"].includes(to.name)) {
+    console.log("Redirecting to home because user is already logged in.");
+    next({ name: "home" });
+  } else if (!isAuthenticated && to.meta.requiresAuth) {
+    console.log("User isn't logged in, redirecting to login.");
+    next({ name: "Login" });
   } else {
     next();
   }
